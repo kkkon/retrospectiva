@@ -32,6 +32,7 @@ module WikiEngine
     def parse_wiki_word_link(match_data, &block)
       prefix, page, title, size = extract_wiki_word_parts(match_data)
       page  = page.to_s.gsub(/ +/, ' ').strip
+      page = WikiEngine.decode_utf8_character( page )
       title = title.blank? ? page : title.strip
       size  = size ? size.sub(/\W+215\W/, 'x') : nil
       page.starts_with?('\\') ? match_data[0].sub(/\\/, '') : yield(prefix, page, title, size)      

@@ -17,7 +17,15 @@ module WikiEngine
     # Returns the HTML formatted markup
     def markup(text, engine = nil)
       engine = select_engine(engine)
-      text.blank? ? '' : engine.markup(text)
+      if text.blank?
+        ''
+      else
+        #engine.markup(text)
+        encode = encode_utf8_character( text )
+        temp = engine.markup(encode)
+        result = decode_utf8_character( temp )
+        result
+      end
     end
   
     # This method can be called in environment.rb to override the default engine
@@ -66,10 +74,11 @@ module WikiEngine
     end
 
     def with_text_parts_only(text, &block)
-      tokenizer = HTML::Tokenizer.new(text)
+      encode = encode_utf8_character( text )
+      tokenizer = HTML::Tokenizer.new(encode)
       open_pre  = false
       
-      [].tap do |result|           
+      temp = [].tap do |result|           
         
         while token = tokenizer.next
           node = HTML::Node.parse(nil, 0, 0, token, false)
@@ -80,12 +89,34 @@ module WikiEngine
             if node.is_a?(HTML::Tag) and node.name == 'pre'
               open_pre = node.closing.nil? 
             end
+            token = decode_utf8_character( token )
             result << token
           end
         end
 
       end.join      
+
+      result = decode_utf8_character( temp )
+      result
     end    
+
+    def encode_utf8_character(text)
+      encode = ''
+      text.unpack( "U*" ).each { |c|
+        if c < 128
+          encode << c
+        else
+          encode << sprintf( "XYZ%04xZXY", c )
+        end
+      }
+      encode
+    end
+
+    def decode_utf8_character(text)
+      text.gsub /XYZ([0-9a-z]{4})ZXY/ do |match|
+        match = [ $1.hex ].pack( "U*" )
+      end
+    end
 
     private      
 
