@@ -5,7 +5,12 @@ require(File.join(File.dirname(__FILE__), 'config', 'boot'))
 
 require 'rake'
 require 'rake/testtask'
-require 'rake/rdoctask'
+
+begin
+  require 'rdoc/task'
+rescue LoadError
+  # RDoc is not available
+end
 
 require 'tasks/rails'
 require 'retrospectiva/extension_manager/rake_tasks'
