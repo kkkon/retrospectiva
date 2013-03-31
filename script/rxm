@@ -5,7 +5,7 @@
 # Please read LICENSE document for more information.
 #++
 
-require File.expand_path(File.dirname(__FILE__) + "/../config/environment")
+require File.expand_path("../../config/environment", __FILE__)
 
 puts "\n\n----- Retrospectiva extension manager CLI\n"
 

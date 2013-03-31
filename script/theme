@@ -8,7 +8,7 @@ require 'yaml'
 class ThemeManager
   THEME_ROOT = 'http://github.com/dim/retrospectiva.themes'
   THEME_INDEX = THEME_ROOT + '/raw/master/info.yml'
-  PUBLIC_ROOT = File.expand_path(File.dirname(__FILE__) + "/../public")
+  PUBLIC_ROOT = File.expand_path('../../public',  __FILE__)
 
   def initialize
     @script_name = File.basename($0)     

@@ -38,7 +38,7 @@ end
 
 # Set up our environment
 ENV["RAILS_ENV"] = OPTIONS[:environment]
-require File.dirname(__FILE__) + '/../config/environment'
+require File.expand_path('../../config/environment',  __FILE__)
 
 
 if OPTIONS[:dry_run]

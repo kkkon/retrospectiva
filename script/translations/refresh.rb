@@ -3,8 +3,8 @@
 # Run in test mode for safety reasons and to prevent extensions from being loaded
 ENV["RAILS_ENV"] ||= 'test'
 
-require File.dirname(__FILE__) + '/../../config/environment'
-require File.dirname(__FILE__) + '/retro_i18n/settings_file'
+require File.expand_path('../../../config/environment',  __FILE__)
+require File.expand_path('../retro_i18n/settings_file',  __FILE__)
 
 I18n.backend.send :init_translations
 

@@ -10,7 +10,7 @@ rescue LoadError
 	raise LoadError, 'RubyGEMs are NOT installed! Please install RubyGEMs first.'
 end
 
-ROOT_PATH = File.expand_path(File.join(File.dirname(__FILE__), '..'))
+ROOT_PATH = File.expand_path('../..',  __FILE__)
 
 def relativize_path(path)
   File.expand_path(path).gsub(%r{#{Regexp.quote(ROOT_PATH + '/')}}, '')
@@ -76,7 +76,7 @@ def test_environment
   loaded = false
   ENV['RAILS_ENV'] = 'production'
   begin
-    require File.dirname(__FILE__) + '/../config/environment'
+    require File.expand_path('../../config/environment',  __FILE__)
     loaded = true
     summary('Retrospectiva was successfully loaded!')
   rescue

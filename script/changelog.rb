@@ -4,7 +4,7 @@ require 'rubygems'
 require 'active_support'
 require 'action_mailer'
 
-RAILS_ROOT = File.expand_path(File.dirname(__FILE__) + '/..')
+RAILS_ROOT = File.expand_path('../../', __FILE__)
 
 class Commit
   
